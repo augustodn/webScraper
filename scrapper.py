@@ -6,8 +6,8 @@ import re
 
 strPattern = re.compile(r"(?<=\s)\w.+(?=\n+)")
 
-USERNAME = 'adenevreze@gmail.com'
-PASSWORD = 'ecbh385.ti'
+USERNAME = ''
+PASSWORD = ''
 searchString = 'site:linkedin.com/in/ AND "Data Scientist" AND "New York"'
 
 def filter_links(linksList):
