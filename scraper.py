@@ -9,6 +9,7 @@ strPattern = re.compile(r"(?<=\s)\w.+(?=\n+)")
 USERNAME = ''
 PASSWORD = ''
 searchString = 'site:linkedin.com/in/ AND "Data Scientist" AND "New York"'
+DRIVERPATH = '/usr/bin/chromedriver'
 
 def filter_links(linksList):
     links = []
@@ -22,7 +23,13 @@ def filter_links(linksList):
     return(links)
 
 # Open Browser Session
-driver = webdriver.Chrome('/usr/bin/chromedriver')
+# In case you're using a different browser, check 
+# https://www.selenium.dev/downloads/
+# For Chrome in particular 
+# https://sites.google.com/a/chromium.org/chromedriver/
+# Please note that the driver version has to match **exactly** with your
+# browser version and placed in the same path as browser executable
+driver = webdriver.Chrome(DRIVERPATH)
 
 #Get webpage
 driver.get('https://www.linkedin.com')
@@ -53,8 +60,9 @@ links = filter_links(linkedinUrls)
 for link in links:
     driver.get(link)
     sleep(5)
+    # Send the complete webpage to the Selector
     sel = Selector(text=driver.page_source)
-
+    # Find by strings by classes, clean them with Regular Expression
     rawName = sel.xpath('//*[starts-with(@class, "inline t-24 t-black t-normal break-words")]/text()').extract_first()
     name = strPattern.findall(rawName)[0]
     rawPosition = sel.xpath('//*[starts-with(@class, "mt1 t-18 t-black t-normal break-words")]/text()').extract_first()
