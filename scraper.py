@@ -6,9 +6,9 @@ import re
 
 strPattern = re.compile(r"(?<=\s)\w.+(?=\n+)")
 
-USERNAME = ''
-PASSWORD = ''
-searchString = 'site:linkedin.com/in/ AND "Data Scientist" AND "New York"'
+USERNAME = '' # Insert your linkedin user
+PASSWORD = '' # Insert your linkedin password
+searchString = 'site:linkedin.com/in/ AND "Data Scientist" AND "Argentina"'
 DRIVERPATH = '/usr/bin/chromedriver'
 
 def filter_links(linksList):
@@ -62,15 +62,19 @@ for link in links:
     sleep(5)
     # Send the complete webpage to the Selector
     sel = Selector(text=driver.page_source)
-    # Find by strings by classes, clean them with Regular Expression
-    rawName = sel.xpath('//*[starts-with(@class, "inline t-24 t-black t-normal break-words")]/text()').extract_first()
+    # Find strings by CSS classes, clean them with regular expressions
+    rawName = sel.xpath('//*[starts-with(@class, \
+        "inline t-24 t-black t-normal break-words")]/text()').extract_first()
     name = strPattern.findall(rawName)[0]
-    rawPosition = sel.xpath('//*[starts-with(@class, "mt1 t-18 t-black t-normal break-words")]/text()').extract_first()
+    rawPosition = sel.xpath('//*[starts-with(@class,\
+        "mt1 t-18 t-black t-normal break-words")]/text()').extract_first()
     position = strPattern.findall(rawPosition)[0]
-    rawLocation = sel.xpath('//*[starts-with(@class, "t-16 t-black t-normal inline-block")]/text()').extract_first()
+    rawLocation = sel.xpath('//*[starts-with(@class, \
+        "t-16 t-black t-normal inline-block")]/text()').extract_first()
     location = strPattern.findall(rawLocation)[0]
-    compnUniversity = sel.xpath('//*[starts-with(@class, \
-                                "text-align-left ml2 t-14 t-black t-bold full-width lt-line-clamp lt-line-clamp--multi-line ember-view")]/text()').extract()
+    compnUniversity = sel.xpath('//*[starts-with(@class,' \
+        '"text-align-left ml2 t-14 t-black t-bold full-width lt-line-clamp '\
+        'lt-line-clamp--multi-line ember-view")]/text()').extract()
     company = strPattern.findall(compnUniversity[0])[0]
     if len(compnUniversity) > 1:
         university = strPattern.findall(compnUniversity[1])[0]
