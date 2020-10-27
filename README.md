@@ -4,6 +4,7 @@ In order to use the scraper script properly you have to:
 # Install the dependencies
 ### Linux:
 ``$ pip install selenium``
+
 ``$ pip install parsel``
 
 # Download the driver
